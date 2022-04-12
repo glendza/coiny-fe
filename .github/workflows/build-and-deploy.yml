@@ -1,0 +1,20 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: cp ~/.keys/.env.fe .env
+      - run: npm run test:unit
+      - run: npm run build
+      - run: cp -a dist/. /var/www/html/coiny.glendza.com/frontend/
