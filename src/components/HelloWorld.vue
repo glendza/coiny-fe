@@ -9,11 +9,11 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'HelloWorld'
-})
+});
 </script>
 
 <style scoped lang="scss">
-  div {
-    color: blue;
-  }
+div {
+  color: blue;
+}
 </style>
