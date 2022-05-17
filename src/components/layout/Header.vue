@@ -54,9 +54,3 @@ const toggleMenu = (): void => {
   isExpanded.value = !isExpanded.value;
 };
 </script>
-
-<style lang="scss" scoped>
-.banner {
-  min-height: 56px;
-}
-</style>
