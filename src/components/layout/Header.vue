@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark p-2">
   <router-link to="/" class="navbar-brand">Coiny</router-link>
   <button
     class="navbar-toggler"
