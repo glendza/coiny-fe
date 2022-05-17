@@ -1,15 +1,15 @@
 <template>
-  <HelloWorld />
+  <layout></layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from '@/components/HelloWorld.vue'
+import { defineComponent } from 'vue';
+import Layout from '@/components/layout/Layout.vue';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    HelloWorld
+    Layout
   }
-})
+});
 </script>
