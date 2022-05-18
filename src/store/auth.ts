@@ -1,3 +1,4 @@
+import { unref } from 'vue';
 import { defineStore } from 'pinia';
 import { authAPI } from '@/api';
 import { Router } from 'vue-router';
@@ -10,6 +11,8 @@ interface AuthState {
   loading: boolean;
   loginFailed: boolean;
 }
+
+export const isLoggedIn = () => !!localStorage.getItem(ACCESS_TOKEN_KEY);
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -27,7 +30,9 @@ const useAuthStore = defineStore('auth', {
         localStorage.setItem(ACCESS_TOKEN_KEY, tokenPair.access);
         localStorage.setItem(REFRESH_TOKEN_KEY, tokenPair.refresh);
         this.loginFailed = false;
-        this.router.push({ name: 'home' });
+        // Redirect to either home, or the page the user was logged out from
+        const currentRoute = unref(this.router.currentRoute);
+        this.router.push(currentRoute.redirectedFrom || { name: 'home' });
       } catch (e) {
         console.error('Failed to obtain tokens!', e);
         this.loginFailed = true;
