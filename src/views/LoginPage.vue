@@ -4,7 +4,7 @@
     <div class="card-header text-center user-select-none">
       Login
     </div>
-    <div class="card-body d-flex flex-column">
+    <div class="card-body d-flex flex-column" v-on:keyup.enter="login">
       <div class="mb-2">
         <label class="form-label user-select-none" for="email">Email:</label>
         <input

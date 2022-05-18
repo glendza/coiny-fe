@@ -10,14 +10,14 @@ interface AuthState {
   router: Router;
   loading: boolean;
   loginFailed: boolean;
+  isLoggedIn: boolean;
 }
-
-export const isLoggedIn = () => !!localStorage.getItem(ACCESS_TOKEN_KEY);
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
     loading: false,
-    loginFailed: false
+    loginFailed: false,
+    isLoggedIn: !!localStorage.getItem(ACCESS_TOKEN_KEY)
   } as AuthState),
   getters: {
     accessToken: () => localStorage.getItem(ACCESS_TOKEN_KEY)
@@ -30,11 +30,13 @@ const useAuthStore = defineStore('auth', {
         localStorage.setItem(ACCESS_TOKEN_KEY, tokenPair.access);
         localStorage.setItem(REFRESH_TOKEN_KEY, tokenPair.refresh);
         this.loginFailed = false;
+        this.isLoggedIn = true;
         // Redirect to either home, or the page the user was logged out from
         const currentRoute = unref(this.router.currentRoute);
         this.router.push(currentRoute.redirectedFrom || { name: 'home' });
       } catch (e) {
         console.error('Failed to obtain tokens!', e);
+        this.isLoggedIn = false;
         this.loginFailed = true;
       }
       this.loading = false;
@@ -54,9 +56,10 @@ const useAuthStore = defineStore('auth', {
       }
     },
     logout() {
-      // First we remove the tokens
+      // First we remove the tokens and set the store state
       localStorage.removeItem(ACCESS_TOKEN_KEY);
       localStorage.removeItem(REFRESH_TOKEN_KEY);
+      this.isLoggedIn = false;
       // Then we redireect to login page
       this.router.push({ name: 'login' });
     }

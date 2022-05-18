@@ -1,8 +1,8 @@
 import { createApp, markRaw } from 'vue';
 import { IonicVue } from '@ionic/vue';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import App from './App.vue';
-import './registerServiceWorker';
 import router from './router';
 import { createPinia } from 'pinia';
 

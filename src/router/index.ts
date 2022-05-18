@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { isLoggedIn } from '@/store/auth';
+import useAuthStore from '@/store/auth';
 
 import HomePage from '@/views/HomePage.vue';
 import StrategyPage from '@/views/StrategyPage.vue';
@@ -35,7 +35,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // If the user is not logged in, and he tries to access a page that requires login...
-  if (to.meta.requiresAuth && !isLoggedIn()) {
+  const authStore = useAuthStore();
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
     next({ name: 'login' });
   } else {
     next();
@@ -44,7 +45,8 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   // If the user is logged in, and he tries to visit the login page...
-  if (to.name === 'login' && isLoggedIn()) {
+  const authStore = useAuthStore();
+  if (to.name === 'login' && authStore.isLoggedIn) {
     next({ name: 'home' });
   } else {
     next();
