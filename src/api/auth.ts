@@ -1,13 +1,14 @@
-import axios from './axios';
+import { anonymusCoinyAxios as axios } from './axios';
 import { auth } from '@/types';
 
 const BASE_PATH = '/auth';
 
-export const login = (email: string, password: string): Promise<auth.LoginResponse> => {
+export const login = (email: string, password: string) => {
   const payload = { email, password } as auth.LoginRequest;
-  return axios.post(BASE_PATH + '/token/', payload);
+  return axios.post<auth.LoginResponse>(BASE_PATH + '/token/', payload);
 };
 
-export const refresh = (refreshToken: string): Promise<auth.RefreshResponse> => {
-  return axios.post(BASE_PATH + '/token/refresh/', { refresh: refreshToken } as auth.RefreshRequest);
+export const refresh = (refreshToken: string) => {
+  const payload = { refresh: refreshToken } as auth.RefreshRequest;
+  return axios.post<auth.RefreshResponse>(BASE_PATH + '/token/refresh/', payload);
 };
