@@ -1,25 +1,56 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from '@ionic/vue-router';
+import useAuthStore from '@/store/auth';
 
-const routes: Array<RouteRecordRaw> = [
+import HomePage from '@/views/HomePage.vue';
+import StrategyPage from '@/views/StrategyPage.vue';
+
+const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomePage,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
+    path: '/strategy',
+    name: 'strategy',
+    component: StrategyPage,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/LoginPage.vue')
   }
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  // If the user is not logged in, and he tries to access a page that requires login...
+  const authStore = useAuthStore();
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  // If the user is logged in, and he tries to visit the login page...
+  const authStore = useAuthStore();
+  if (to.name === 'login' && authStore.isLoggedIn) {
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+});
+
+export default router;
