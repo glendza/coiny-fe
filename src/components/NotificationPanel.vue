@@ -27,7 +27,7 @@ const { notifications } = storeToRefs(userStore);
 
 <style lang="scss" scoped>
 .notification {
-  width: 400px;
+  max-width: 400px;
   height: 100px;
 }
 </style>
