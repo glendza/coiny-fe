@@ -2,14 +2,6 @@
   <layout title="Strategy"></layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import Layout from '@/components/layout/Layout.vue';
-
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    Layout
-  }
-});
 </script>
