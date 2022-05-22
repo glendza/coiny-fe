@@ -4,16 +4,15 @@
   </layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import useUserStore from '@/store/user';
 import Layout from '@/components/layout/Layout.vue';
 import NotificationPanel from '@/components/NotificationPanel.vue';
 
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    Layout,
-    NotificationPanel
-  }
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.fetchNotifications(0);
 });
 </script>

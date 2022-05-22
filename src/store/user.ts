@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { user } from '@/types';
 import { userAPI } from '@/api';
 
-const NOTIFICATIONS_PER_PAGE = 15;
+const NOTIFICATIONS_PER_PAGE = 20;
 
 interface AuthState {
   loading: boolean;
@@ -16,7 +16,6 @@ const useUserStore = defineStore('user', {
     currentUser: null,
     notifications: []
   } as AuthState),
-  getters: { },
   actions: {
     async getCurrentUser() {
       try {
@@ -24,6 +23,14 @@ const useUserStore = defineStore('user', {
         this.currentUser = currentUser;
       } catch (e) {
         console.error('Failed to fetch current user!', e);
+      }
+    },
+    async fetchNotifications(offset: number, limit = NOTIFICATIONS_PER_PAGE) {
+      try {
+        const { data: notifications } = await userAPI.getNotifications(limit, offset);
+        this.notifications = notifications.results;
+      } catch (e) {
+        console.error('Failed to fetch user notifications!', e);
       }
     },
     appendNotification(notification: user.Notification) {
