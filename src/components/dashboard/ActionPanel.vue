@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import useUserStore from '@/store/user';
-import DashboardPanel from '@/components/DashboardPanel.vue';
+import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
 
 const userStore = useUserStore();
 

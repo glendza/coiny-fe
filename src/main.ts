@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import App from './App.vue';
 import router from './router';
 import { createPinia } from 'pinia';
-import Shruggie from '@/components/Shruggie.vue';
+import Shruggie from '@/components/layout/Shruggie.vue';
 
 const pinia = createPinia();
 pinia.use(({ store }) => {

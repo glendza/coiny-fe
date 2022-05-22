@@ -11,8 +11,8 @@
 import { onMounted } from 'vue';
 import useUserStore from '@/store/user';
 import Layout from '@/components/layout/Layout.vue';
-import NotificationPanel from '@/components/NotificationPanel.vue';
-import ActionPanel from '@/components/ActionPanel.vue';
+import NotificationPanel from '@/components/dashboard/NotificationPanel.vue';
+import ActionPanel from '@/components/dashboard/ActionPanel.vue';
 
 const userStore = useUserStore();
 
