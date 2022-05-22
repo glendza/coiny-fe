@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <layout title="Dashboard">
     <notification-panel />
   </layout>
 </template>

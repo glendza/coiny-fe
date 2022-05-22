@@ -1,5 +1,5 @@
 <template>
-  <layout></layout>
+  <layout title="Strategy"></layout>
 </template>
 
 <script lang="ts">
