@@ -1,20 +1,16 @@
 <template>
-<dashboard-panel title="Notifications">
-  <div class="card mb-2" v-for="notification in notifications" :key="notification.id">
+<dashboard-panel title="Action Log">
+  <div class="card mb-2" v-for="action in actions" :key="action.id">
     <div class="card-header user-select-none d-flex justify-content-between">
       <span>
-        {{ notification.title || 'Notification' }}
-      </span>
-      <span>
-        <!-- <i class="bi bi-x-square-fill h5"></i> -->
-        <!-- <i class="bi bi-pin-angle h5"></i> -->
+        {{ action.title || 'Action' }}
       </span>
     </div>
     <div class="card-body d-flex flex-column" v-on:keyup.enter="login">
-      <p class="card-text">{{ notification.content }}</p>
+      <p class="card-text">{{ action.content }}</p>
     </div>
   </div>
-  <shruggie v-if="!notifications.length">
+  <shruggie v-if="!actions.length">
     No actions yet
   </shruggie>
 </dashboard-panel>
@@ -27,5 +23,5 @@ import DashboardPanel from '@/components/DashboardPanel.vue';
 
 const userStore = useUserStore();
 
-const { notifications } = storeToRefs(userStore);
+const { actions } = storeToRefs(userStore);
 </script>

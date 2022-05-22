@@ -21,3 +21,10 @@
 
 @import './solar';
 @import 'bootstrap/scss/bootstrap';
+
+/* [----------------------------] Coiny [----------------------------] */
+
+body, html {
+  min-height: 100%;
+  overflow: auto;
+}

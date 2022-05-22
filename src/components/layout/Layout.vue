@@ -3,7 +3,7 @@
 <div class="bg-secondary bg-gradient p-2 text-dark">
   <h4 class="m-0">{{ title }}</h4>
 </div>
-<main class="flex-grow-1 container-fluid p-2">
+<main class="flex-grow-1 container-fluid">
   <slot>😐</slot>
 </main>
 <coiny-footer />

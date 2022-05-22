@@ -40,7 +40,7 @@ const $route = useRoute();
 const isExpanded = ref<boolean>(false);
 const menuItems: { label: string; route: string; }[] = [
   {
-    label: 'Home',
+    label: 'Dashboard',
     route: '/'
   },
   {

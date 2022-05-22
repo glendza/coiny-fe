@@ -2,19 +2,22 @@ import { defineStore } from 'pinia';
 import { user } from '@/types';
 import { userAPI } from '@/api';
 
-const NOTIFICATIONS_PER_PAGE = 20;
+const NOTIFICATIONS_PER_PAGE = 10;
 
 interface AuthState {
   loading: boolean;
   currentUser: user.User | null;
+  // TODO: Move to a separate store everything notification related!
   notifications: user.Notification[];
+  actions: unknown[]; // TODO
 }
 
 const useUserStore = defineStore('user', {
   state: () => ({
     loading: false,
     currentUser: null,
-    notifications: []
+    notifications: [],
+    actions: []
   } as AuthState),
   actions: {
     async getCurrentUser() {
