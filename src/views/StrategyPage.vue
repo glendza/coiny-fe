@@ -1,15 +1,14 @@
 <template>
-  <layout></layout>
+  <layout title="Strategy">
+    <div class="row p-2 flex-fill">
+      <strategy-editor />
+      <strategy-rule-definitions />
+    </div>
+  </layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import Layout from '@/components/layout/Layout.vue';
-
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    Layout
-  }
-});
+import StrategyEditor from '@/components/strategy/StrategyEditor.vue';
+import StrategyRuleDefinitions from '@/components/strategy/StrategyRuleDefinitions.vue';
 </script>

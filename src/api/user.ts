@@ -1,8 +1,16 @@
 import axios from './axios';
-import { user } from '@/types';
+import { user, PaginatedResponse } from '@/types';
 
 const BASE_PATH = '/user';
 
 export const getCurrentUser = () => {
   return axios.get<user.User>(BASE_PATH + '/current-user/');
+};
+
+export const getNotifications = (limit: number, offset: number) => {
+  return axios.get<PaginatedResponse<user.Notification>>(
+    BASE_PATH + '/notifications', {
+      params: { limit, offset }
+    }
+  );
 };

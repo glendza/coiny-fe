@@ -1,6 +1,9 @@
 <template>
 <coiny-header />
-<main class="flex-grow-1 container-fluid p-2">
+<div class="bg-secondary bg-gradient p-2 text-dark">
+  <h4 class="m-0">{{ title }}</h4>
+</div>
+<main class="container-fluid d-flex flex-column flex-fill">
   <slot>😐</slot>
 </main>
 <coiny-footer />
@@ -9,4 +12,8 @@
 <script setup lang="ts">
 import CoinyHeader from './Header.vue';
 import CoinyFooter from './Footer.vue';
+
+defineProps({
+  title: String
+});
 </script>

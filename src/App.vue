@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import useServiceWorker from '@/composables/shared-worker';
+import useNotifications from '@/composables/notifications';
 
-useServiceWorker();
+useNotifications();
 </script>
 
 <style lang="scss">

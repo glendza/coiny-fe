@@ -24,7 +24,7 @@ coinyAxios.interceptors.request.use(
   config => {
     const authStore = useAuthStore();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    config.headers!.Authorization = authStore.accessToken!;
+    config.headers!.Authorization = `Bearer ${authStore.accessToken!}`;
     return config;
   },
   (error: AxiosError) => Promise.reject(error)

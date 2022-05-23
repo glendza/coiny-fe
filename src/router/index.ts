@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import useAuthStore from '@/store/auth';
 
-import HomePage from '@/views/HomePage.vue';
+import DashboardPage from '@/views/Dashboard.vue';
 import StrategyPage from '@/views/StrategyPage.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomePage,
+    name: 'dashboard',
+    component: DashboardPage,
     meta: {
       requiresAuth: true
     }
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
   // If the user is logged in, and he tries to visit the login page...
   const authStore = useAuthStore();
   if (to.name === 'login' && authStore.isLoggedIn) {
-    next({ name: 'home' });
+    next({ name: 'dashboard' });
   } else {
     next();
   }

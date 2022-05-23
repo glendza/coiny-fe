@@ -31,9 +31,9 @@ const useAuthStore = defineStore('auth', {
         localStorage.setItem(REFRESH_TOKEN_KEY, tokenPair.refresh);
         this.loginFailed = false;
         this.isLoggedIn = true;
-        // Redirect to either home, or the page the user was logged out from
+        // Redirect to either dashboard, or the page the user was logged out from
         const currentRoute = unref(this.router.currentRoute);
-        this.router.push(currentRoute.redirectedFrom || { name: 'home' });
+        this.router.push(currentRoute.redirectedFrom || { name: 'dashboard' });
       } catch (e) {
         console.error('Failed to obtain tokens!', e);
         this.isLoggedIn = false;
