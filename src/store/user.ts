@@ -4,7 +4,7 @@ import { userAPI } from '@/api';
 
 const NOTIFICATIONS_PER_PAGE = 10;
 
-interface AuthState {
+interface UserState {
   loading: boolean;
   currentUser: user.User | null;
   // TODO: Move to a separate store everything notification related!
@@ -18,7 +18,7 @@ const useUserStore = defineStore('user', {
     currentUser: null,
     notifications: [],
     actions: []
-  } as AuthState),
+  } as UserState),
   actions: {
     async getCurrentUser() {
       try {

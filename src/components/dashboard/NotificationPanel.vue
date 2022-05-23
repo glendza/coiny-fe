@@ -15,7 +15,7 @@
     </div>
   </div>
   <shruggie v-if="!notifications.length">
-    No actions yet
+    No notifications yet
   </shruggie>
 </dashboard-panel>
 </template>
