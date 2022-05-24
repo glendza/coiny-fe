@@ -1,6 +1,6 @@
 <template>
-<aside class="dashboard-panel col-12 col-md-6 col-xl-4 p-2 bg-dark border border-5">
-  <div class="p-2 text-light mb-2">
+<aside class="dashboard-panel p-2 bg-dark border border-5">
+  <div class="p-2 text-light mb-2" v-if="title">
     <h4 class="m-0">{{ title }}</h4>
   </div>
   <slot />

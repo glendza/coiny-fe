@@ -1,5 +1,5 @@
 <template>
-<dashboard-panel title="Action Log">
+<dashboard-panel title="Action Log" class="col-12 col-md-6 col-xl-4">
   <div class="card mb-2" v-for="action in actions" :key="action.id">
     <div class="card-header user-select-none d-flex justify-content-between">
       <span>
