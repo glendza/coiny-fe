@@ -1,13 +1,13 @@
 <template>
   <div class="flex-fill p-1">
-    <textarea class="editor-textarea p-2" v-model="rules" />
+    <textarea :disabled="disabled" class="editor-textarea p-2 text-dark" v-model="rules" />
   </div>
 </template>
 
 <script setup lang="ts">
 import useStrategyEditor from '@/composables/strategy/strategy-editor';
 
-const { rules } = useStrategyEditor();
+const { rules, useGlobalRules: disabled } = useStrategyEditor();
 </script>
 
 <style lang="scss" scoped>

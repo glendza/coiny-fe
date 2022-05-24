@@ -8,7 +8,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import Layout from '@/components/layout/Layout.vue';
 import StrategyEditor from '@/components/strategy/StrategyEditor.vue';
 import StrategyRuleDefinitions from '@/components/strategy/StrategyRuleDefinitions.vue';
+import useRulesStore from '@/store/rules';
+
+const rulesStore = useRulesStore();
+
+onMounted(async () => {
+  await rulesStore.getUserRuleset();
+});
 </script>

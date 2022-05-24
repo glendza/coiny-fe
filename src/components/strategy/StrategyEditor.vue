@@ -1,9 +1,13 @@
 <template>
-  <dashboard-panel title="Strategy Editor" class="col-12 col-md-6">
+  <dashboard-panel
+    title="Strategy Editor"
+    :subtitle="deployedAt"
+    class="col-12 col-lg-6"
+  >
     <template #header>
-      <span class="text-muted" v-if="ruleset?.deployed_at">
-        {{ deployedAt }}
-      </span>
+      <div class="d-flex align-items-center">
+        <toggle-button v-model="useGlobalRules" />
+      </div>
     </template>
     <strategy-text-editor />
     <template #footer>
@@ -17,7 +21,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          :class="{'disabled': isDraftSaving}"
+          :class="{'disabled': isDraftSaving || useGlobalRules}"
           @click="rulesStore.deployRules"
         >
           Deploy Rules
@@ -28,15 +32,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
+import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
+import ToggleButton from '@/components/controls/ToggleButton.vue';
 import useRulesStore from '@/store/rules';
 import { storeToRefs } from 'pinia';
-import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
 import { dateUtils } from '@/utils';
+import useDebouncer from '@/composables/debouncer';
 
 const rulesStore = useRulesStore();
-const { ruleset, isDraftSaving } = storeToRefs(rulesStore);
+
+const { isDraftSaving, useGlobalRules } = storeToRefs(rulesStore);
+
+const debouncedUpdateGlobalRules = useDebouncer(() => {
+  // TODO: Prevent updating if value is same as before
+  rulesStore.toggleGlobalRulesUsage(useGlobalRules.value);
+});
+
+watch(useGlobalRules, () => {
+  debouncedUpdateGlobalRules();
+});
 
 const deployedAt = computed(() => {
   if (!rulesStore.ruleset) {

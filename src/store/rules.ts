@@ -6,13 +6,15 @@ interface RulesState {
   loading: boolean;
   isDraftSaving: boolean;
   ruleset: rules.Ruleset | null;
+  useGlobalRules: boolean;
 }
 
 const useRulesStore = defineStore('rules', {
   state: () => ({
     loading: false,
     isDraftSaving: false,
-    ruleset: null
+    ruleset: null,
+    useGlobalRules: true
   } as RulesState),
   getters: {
     isDraft: state => state.ruleset?.rules !== state.ruleset?.rules_draft
@@ -56,6 +58,15 @@ const useRulesStore = defineStore('rules', {
         this.ruleset = ruleset;
       } catch (e) {
         console.error('Failed to reset ruleset draft!', e);
+      }
+      this.loading = false;
+    },
+    async toggleGlobalRulesUsage(value: boolean) {
+      this.loading = true;
+      try {
+        console.log('Requested value: ', value, 'old value: ', this.useGlobalRules);
+      } catch (e) {
+        console.error('Failed to toggle global ruleset usage!', e);
       }
       this.loading = false;
     }

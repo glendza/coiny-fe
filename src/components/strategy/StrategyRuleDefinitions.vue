@@ -1,5 +1,5 @@
 <template>
-<dashboard-panel title="Rule Definitions" class="col-12 col-md-6">
+<dashboard-panel title="Rule Definitions" class="col-12 col-lg-6">
   <shruggie>
     Not yet implemented
   </shruggie>
