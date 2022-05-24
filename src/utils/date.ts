@@ -1,4 +1,8 @@
 export const toLocale = (dtString: string) => {
+  if (!dtString) {
+    return '';
+  }
+
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',

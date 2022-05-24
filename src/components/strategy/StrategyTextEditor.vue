@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-fill p-1 bg-secondary">
+  <div class="flex-fill p-1">
     <textarea class="editor-textarea p-2" v-model="rules" />
   </div>
 </template>

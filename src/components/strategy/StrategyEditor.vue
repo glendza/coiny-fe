@@ -1,56 +1,50 @@
 <template>
-  <aside class="strategy-panel col d-flex bg-dark border border-5">
-    <tabs
-      v-model="selectedTab"
-      :tabs="Object.values(EditorTabs)"
-      class="flex-fill"
-    >
-      <template v-if="rulesStore.isDraftSaving" #header>
-        <spinner pre="Saving draft..." />
-      </template>
-      <strategy-gui-editor v-if="selectedTab === EditorTabs.GUI" />
-      <strategy-text-editor v-if="selectedTab === EditorTabs.TEXT" />
-      <template #footer>
-        <div class="p-2 d-flex justify-content-end">
-          <button
-            type="button"
-            class="btn btn-primary"
-            :class="{'disabled': rulesStore.isDraftSaving}"
-            @click="rulesStore.deployRules"
-          >
-            Deploy Rules
-          </button>
+  <dashboard-panel title="Strategy Editor" class="col-12 col-md-6">
+    <template #header>
+      <span class="text-muted" v-if="ruleset?.deployed_at">
+        {{ deployedAt }}
+      </span>
+    </template>
+    <strategy-text-editor />
+    <template #footer>
+      <div class="p-1 d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <spinner
+            post="Saving draft..."
+            v-if="isDraftSaving"
+          />
         </div>
-      </template>
-    </tabs>
-  </aside>
+        <button
+          type="button"
+          class="btn btn-primary"
+          :class="{'disabled': isDraftSaving}"
+          @click="rulesStore.deployRules"
+        >
+          Deploy Rules
+        </button>
+      </div>
+    </template>
+  </dashboard-panel>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import Tabs from '@/components/layout/Tabs.vue';
-import StrategyGuiEditor from '@/components/strategy/StrategyGuiEditor.vue';
-import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
+import { computed } from 'vue';
+import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
 import useRulesStore from '@/store/rules';
-
-enum EditorTabs {
-  GUI = 'Visual Editor',
-  TEXT = 'Raw Editor'
-}
+import { storeToRefs } from 'pinia';
+import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
+import { dateUtils } from '@/utils';
 
 const rulesStore = useRulesStore();
+const { ruleset, isDraftSaving } = storeToRefs(rulesStore);
 
-// Component API
-defineProps({
-  modelValue: String
+const deployedAt = computed(() => {
+  if (!rulesStore.ruleset) {
+    return '';
+  }
+  return `Last deployed on ${dateUtils.toLocale(rulesStore.ruleset.deployed_at)}`;
 });
-
-// Data
-const selectedTab = ref<EditorTabs>(EditorTabs.TEXT); // TODO: GUI should be default
 </script>
 
 <style lang="scss" scoped>
-.strategy-panel {
-  border-color: var(--bs-body-bg) !important;
-}
 </style>
