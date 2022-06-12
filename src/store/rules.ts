@@ -23,8 +23,7 @@ const useRulesStore = defineStore('rules', {
     async getUserRuleset() {
       this.loading = true;
       try {
-        const { data: ruleset } = await rulesAPI.getUserRuleset();
-        this.ruleset = ruleset;
+        this.ruleset = await rulesAPI.getUserRuleset();
       } catch (e) {
         console.error('Failed to fetch user\'s ruleset!', e);
       }
@@ -32,9 +31,7 @@ const useRulesStore = defineStore('rules', {
     },
     async saveDraft(draft: string | null) {
       try {
-        const { data: ruleset } = await rulesAPI.saveDraft(draft);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.ruleset = ruleset;
+        this.ruleset = await rulesAPI.saveDraft(draft);
       } catch (e) {
         console.error('Failed to fetch user\'s ruleset!', e);
       }
@@ -67,6 +64,7 @@ const useRulesStore = defineStore('rules', {
         console.log('Requested value: ', value, 'old value: ', this.useGlobalRules);
       } catch (e) {
         console.error('Failed to toggle global ruleset usage!', e);
+        this.useGlobalRules = !value;
       }
       this.loading = false;
     }
