@@ -7,7 +7,7 @@
     class="overflow-hidden"
     :class="{ 'collapsed': !isExpanded }"
   >
-    <table class="rule-definition__documentation w-100">
+    <table class="rule-definition__documentation table-dark table-bordered w-100">
       <tr>
         <td class="align-top p-1">Name</td>
         <td class="p-1 ps-4 text-warning fw-bold codelike">{{ name }}</td>
@@ -19,7 +19,7 @@
       <tr>
         <td class="align-top p-1">Arguments</td>
         <td class="p-1 ps-4">
-          <table class="table table-bordered table-primary w-100 text-center">
+          <table class="rule-definition__args-table table table-bordered table-primary w-100 text-center">
             <tr>
               <th class="p-1">name</th>
               <th class="p-1">type</th>
@@ -64,5 +64,9 @@ const { isToggledOn: isExpanded, toggle: toggleExpand } = useToggler(false);
 <style lang="scss" scoped>
 .collapsed {
   max-height: 0;
+}
+
+.rule-definition__args-table {
+  border-color: transparent;
 }
 </style>
