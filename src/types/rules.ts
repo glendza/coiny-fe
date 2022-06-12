@@ -3,8 +3,10 @@
 export interface Ruleset {
   deployed_at: string;
   is_enabled: boolean;
+  use_global_rules: boolean;
   rules: string | null;
   rules_draft: string | null;
+  global_rules: string | null;
 }
 
 export enum FunctionType {

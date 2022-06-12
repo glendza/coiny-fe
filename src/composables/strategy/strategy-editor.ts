@@ -6,7 +6,7 @@ import useRulesStore from '@/store/rules';
 const useStrategyEditor = () => {
   const rulesStore = useRulesStore();
 
-  const { ruleset, isDraftSaving, useGlobalRules } = storeToRefs(rulesStore);
+  const { ruleset, isDraftSaving } = storeToRefs(rulesStore);
 
   const rules = ref<string | null>();
 
@@ -29,7 +29,7 @@ const useStrategyEditor = () => {
     });
   });
 
-  return { rules, useGlobalRules };
+  return { rules, ruleset };
 };
 
 export default useStrategyEditor;

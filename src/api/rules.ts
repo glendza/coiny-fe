@@ -24,3 +24,11 @@ export const getRuleDocs = async () => {
   const { data: ruleDocs } = await axios.get<rules.RulesDocumentation>(BASE_PATH + '/rule-docs');
   return ruleDocs;
 };
+
+export const toggleGlobalRules = async (value: boolean) => {
+  const payload = {
+    use_global_rules: value
+  };
+  const { data: ruleset } = await axios.patch<rules.Ruleset>(BASE_PATH + '/toggle-global-rules', payload);
+  return ruleset;
+};

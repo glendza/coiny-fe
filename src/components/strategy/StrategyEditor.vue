@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
 import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
 import ToggleButton from '@/components/controls/ToggleButton.vue';
@@ -43,15 +43,26 @@ import useDebouncer from '@/composables/debouncer';
 
 const rulesStore = useRulesStore();
 
-const { isDraftSaving, useGlobalRules } = storeToRefs(rulesStore);
+const { ruleset, isDraftSaving } = storeToRefs(rulesStore);
+
+const useGlobalRules = ref<boolean>();
 
 const debouncedUpdateGlobalRules = useDebouncer(() => {
   // TODO: Prevent updating if value is same as before
   rulesStore.toggleGlobalRulesUsage(useGlobalRules.value);
 });
 
-watch(useGlobalRules, () => {
+watch(useGlobalRules, (newValue, oldValue) => {
+  if (typeof oldValue === 'undefined') {
+    return;
+  }
   debouncedUpdateGlobalRules();
+});
+
+watch(ruleset, (value) => {
+  if (value && typeof useGlobalRules.value === 'undefined') {
+    useGlobalRules.value = ruleset.value?.use_global_rules;
+  }
 });
 
 const deployedAt = computed(() => {

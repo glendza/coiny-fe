@@ -6,15 +6,13 @@ interface RulesState {
   loading: boolean;
   isDraftSaving: boolean;
   ruleset: rules.Ruleset | null;
-  useGlobalRules: boolean;
 }
 
 const useRulesStore = defineStore('rules', {
   state: () => ({
     loading: false,
     isDraftSaving: false,
-    ruleset: null,
-    useGlobalRules: true
+    ruleset: null
   } as RulesState),
   getters: {
     isDraft: state => state.ruleset?.rules !== state.ruleset?.rules_draft
@@ -42,7 +40,6 @@ const useRulesStore = defineStore('rules', {
       try {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await this.saveDraft(this.ruleset!.rules);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       } catch (e) {
         console.error('Failed to reset ruleset draft!', e);
       }
@@ -61,10 +58,9 @@ const useRulesStore = defineStore('rules', {
     async toggleGlobalRulesUsage(value: boolean) {
       this.loading = true;
       try {
-        console.log('Requested value: ', value, 'old value: ', this.useGlobalRules);
+        this.ruleset = await rulesAPI.toggleGlobalRules(value);
       } catch (e) {
         console.error('Failed to toggle global ruleset usage!', e);
-        this.useGlobalRules = !value;
       }
       this.loading = false;
     }

@@ -1,13 +1,23 @@
 <template>
-  <div class="flex-fill p-1">
-    <textarea :disabled="disabled" class="editor-textarea p-2 text-dark" v-model="rules" />
-  </div>
+<div v-if="rules" class="flex-fill p-1">
+  <textarea
+    v-if="ruleset?.use_global_rules"
+    :disabled="true"
+    class="editor-textarea p-2 text-dark"
+    :value="ruleset?.global_rules"
+  />
+  <textarea
+    v-else
+    class="editor-textarea p-2 text-dark"
+    v-model="rules"
+  />
+</div>
 </template>
 
 <script setup lang="ts">
 import useStrategyEditor from '@/composables/strategy/strategy-editor';
 
-const { rules, useGlobalRules: disabled } = useStrategyEditor();
+const { rules, ruleset } = useStrategyEditor();
 </script>
 
 <style lang="scss" scoped>
