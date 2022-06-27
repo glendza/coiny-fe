@@ -4,7 +4,7 @@
   <div class="layout__title">
     <h4 class="m-0">{{ title }}</h4>
   </div>
-  <div class="layout__right">
+  <div class="layout__right d-flex align-content-center">
     <slot name="header" />
   </div>
 </div>

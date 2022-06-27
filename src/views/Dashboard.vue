@@ -4,6 +4,9 @@
       <notification-panel />
       <action-panel />
     </div>
+    <template #header>
+      <span class="dashboard__total_balance fw-bold h5 m-0">Total balance: 20 $</span>
+    </template>
   </layout>
 </template>
 
@@ -20,3 +23,12 @@ onMounted(() => {
   userStore.fetchNotifications(0);
 });
 </script>
+
+<style lang="scss" scoped>
+.dashboard {
+  &__total_balance {
+    position: relative;
+    top: 3px;
+  }
+}
+</style>
