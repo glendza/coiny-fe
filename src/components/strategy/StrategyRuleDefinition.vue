@@ -1,7 +1,15 @@
 <template>
-<div class="rule-definition">
-  <div class="bg-lighter-dark bg-gradient p-1" @click="toggleExpand">
-    <span>{{ documentation.name }}</span>
+<div class="rule-definition text-light">
+  <div class="bg-lighter-dark bg-gradient p-1 d-flex justify-content-between" @click="toggleExpand">
+    <span>
+      {{ documentation.name }}
+    </span>
+    <span v-if="isExpanded">
+      <i class="bi bi-caret-down-fill"></i>
+    </span>
+    <span v-else>
+      <i class="bi bi-caret-left-fill"></i>
+    </span>
   </div>
   <div
     class="overflow-hidden"
@@ -53,10 +61,12 @@
 import useToggler from '@/composables/toggler';
 import { FunctionDocumentation } from '@/types/rules';
 
-defineProps({
-  name: String,
+interface Props {
+  name: string;
   documentation: FunctionDocumentation
-});
+}
+
+defineProps<Props>();
 
 const { isToggledOn: isExpanded, toggle: toggleExpand } = useToggler(false);
 </script>

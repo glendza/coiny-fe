@@ -29,13 +29,15 @@ interface FunctionArgumentDocumentation {
   name: string;
   type: ArgumentType | ArgumentType[];
   description: string;
+  required: boolean;
+  default: boolean | string | number;
 }
 
 export interface FunctionDocumentation {
   name: string;
   description: string;
   type: FunctionType;
-  arguments: FunctionArgumentDocumentation[]
+  arguments: FunctionArgumentDocumentation[];
 }
 
 export type RulesDocumentation = Record<string, FunctionDocumentation>

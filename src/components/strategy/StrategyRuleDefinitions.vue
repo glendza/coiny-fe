@@ -33,9 +33,9 @@ import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
 import StrategyRuleDefinition from '@/components/strategy/StrategyRuleDefinition.vue';
 import StrategyRuleGroup from '@/components/strategy/StrategyRuleGroup.vue';
 import { rulesAPI } from '@/api';
-import { FunctionType } from '@/types/rules';
+import { FunctionDocumentation, FunctionType } from '@/types/rules';
 
-const ruleDocs = ref();
+const ruleDocs = ref<Record<string, FunctionDocumentation>>();
 
 onMounted(async () => {
   ruleDocs.value = await rulesAPI.getRuleDocs();
