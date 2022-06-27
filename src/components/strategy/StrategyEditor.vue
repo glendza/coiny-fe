@@ -72,6 +72,3 @@ const deployedAt = computed(() => {
   return `Last deployed on ${dateUtils.toLocale(rulesStore.ruleset.deployed_at)}`;
 });
 </script>
-
-<style lang="scss" scoped>
-</style>
