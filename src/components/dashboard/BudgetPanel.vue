@@ -1,17 +1,21 @@
 <template>
 <dashboard-panel title="Budget" class="col-12 col-md-6 col-xl-4" v-if="balance">
-  <div class="h3">
-    <span>Fiat balance: </span>
-    <span>${{ balance.fiat_balance }}</span>
-  </div>
-  <div class="h3 border-bottom">
-    <span>Crypto balance: </span>
-    <span>~${{ balance.crypto_balance }}</span>
-  </div>
-  <div class="h3">
-    <span>Total balance: </span>
-    <span>~${{ balance.fiat_balance + balance.crypto_balance }}</span>
-  </div>
+  <table class="table table-bordered">
+    <tbody>
+      <tr class="h4 text-light">
+        <td>Fiat balance:</td>
+        <td>${{ balance.fiat_balance }}</td>
+      </tr>
+      <tr class="h4 text-light">
+        <td>Crypto balance:</td>
+        <td>~${{ balance.crypto_balance }}</td>
+      </tr>
+      <tr class="h4 text-light">
+        <td>Total balance:</td>
+        <td>~${{ balance.fiat_balance + balance.crypto_balance }}</td>
+      </tr>
+    </tbody>
+  </table>
   <div class="bg-light">
     <LineChart v-bind="lineChartProps" />
   </div>
