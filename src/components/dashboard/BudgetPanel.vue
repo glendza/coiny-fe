@@ -8,11 +8,11 @@
       </tr>
       <tr class="h4 text-light">
         <td>Crypto balance:</td>
-        <td>~${{ balance.crypto_balance }}</td>
+        <td>${{ balance.crypto_balance }}</td>
       </tr>
       <tr class="h4 text-light">
         <td>Total balance:</td>
-        <td>~${{ balance.fiat_balance + balance.crypto_balance }}</td>
+        <td>${{ balance.fiat_balance + balance.crypto_balance }}</td>
       </tr>
     </tbody>
   </table>
