@@ -31,3 +31,8 @@ export interface Transaction {
   fiat_currency: string;
   fiat_amount: string;
 }
+
+export interface Balance {
+  fiat_balance: number;
+  crypto_balance: number;
+}

@@ -22,6 +22,7 @@ onMounted(() => {
   // TODO: Pagination
   userStore.fetchNotifications(0);
   userStore.fetchTransactions(0);
+  userStore.fetchBalance();
 });
 </script>
 

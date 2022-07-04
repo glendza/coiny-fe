@@ -10,6 +10,7 @@ interface UserState {
   // TODO: Move to a separate store everything notification related!
   notifications: user.Notification[];
   transactions: user.Transaction[];
+  balance: user.Balance | null;
 }
 
 const useUserStore = defineStore('user', {
@@ -17,7 +18,8 @@ const useUserStore = defineStore('user', {
     loading: false,
     currentUser: null,
     notifications: [],
-    transactions: []
+    transactions: [],
+    balance: null
   } as UserState),
   actions: {
     async getCurrentUser() {
@@ -53,6 +55,14 @@ const useUserStore = defineStore('user', {
       const transactions = [transaction, ...this.transactions];
       transactions.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
       this.transactions = transactions.slice(0, NOTIFICATIONS_PER_PAGE);
+    },
+    async fetchBalance() {
+      try {
+        const { data: balance } = await userAPI.getBalance();
+        this.balance = balance;
+      } catch (e) {
+        console.error('Failed to fetch user balance!', e);
+      }
     }
   }
 });

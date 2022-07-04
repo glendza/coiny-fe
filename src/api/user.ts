@@ -22,3 +22,7 @@ export const getTransactions = (limit: number, offset: number) => {
     }
   );
 };
+
+export const getBalance = () => {
+  return axios.get<user.Balance>(BASE_PATH + '/balance');
+};
