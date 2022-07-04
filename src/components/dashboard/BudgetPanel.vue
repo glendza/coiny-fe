@@ -40,6 +40,10 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
     yRight: {
       type: 'linear',
       position: 'right'
+    },
+    xAxis: {
+      display: false,
+      position: 'bottom'
     }
   },
   plugins: {
