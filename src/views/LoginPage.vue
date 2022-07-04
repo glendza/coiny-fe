@@ -46,8 +46,8 @@ const email = ref<string>('');
 const password = ref<string>('');
 const { loading, loginFailed } = storeToRefs(authStore);
 
-const login = () => {
-  authStore.login(email.value, password.value);
+const login = async () => {
+  await authStore.login(email.value, password.value);
 };
 </script>
 

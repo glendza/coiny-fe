@@ -16,3 +16,18 @@ export interface Notification {
   content: string;
   image: string | null;
 }
+
+export enum TransactionType {
+  FIAT_TO_CRYPTO = 1,
+  CRYPTO_TO_FIAT = 2
+}
+
+export interface Transaction {
+  id: number;
+  created_at: string;
+  direction: TransactionType;
+  cryptocurrency: string;
+  crypto_amount: string;
+  fiat_currency: string;
+  fiat_amount: string;
+}

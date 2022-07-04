@@ -11,6 +11,7 @@ export interface Ruleset {
 
 export enum FunctionType {
   NOTIFICATION = 'notification',
+  UTILITY = 'utility',
   ACTION = 'action',
   CALCULATION = 'calculation'
 }

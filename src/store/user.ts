@@ -9,7 +9,7 @@ interface UserState {
   currentUser: user.User | null;
   // TODO: Move to a separate store everything notification related!
   notifications: user.Notification[];
-  actions: unknown[]; // TODO
+  transactions: user.Transaction[];
 }
 
 const useUserStore = defineStore('user', {
@@ -17,7 +17,7 @@ const useUserStore = defineStore('user', {
     loading: false,
     currentUser: null,
     notifications: [],
-    actions: []
+    transactions: []
   } as UserState),
   actions: {
     async getCurrentUser() {
@@ -40,6 +40,19 @@ const useUserStore = defineStore('user', {
       const notifications = [notification, ...this.notifications];
       notifications.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
       this.notifications = notifications.slice(0, NOTIFICATIONS_PER_PAGE);
+    },
+    async fetchTransactions(offset: number, limit = NOTIFICATIONS_PER_PAGE) {
+      try {
+        const { data: transactions } = await userAPI.getTransactions(limit, offset);
+        this.transactions = transactions.results;
+      } catch (e) {
+        console.error('Failed to fetch user transactions!');
+      }
+    },
+    appendTransaction(transaction: user.Transaction) {
+      const transactions = [transaction, ...this.transactions];
+      transactions.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      this.transactions = transactions.slice(0, NOTIFICATIONS_PER_PAGE);
     }
   }
 });

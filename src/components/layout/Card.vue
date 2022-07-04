@@ -4,7 +4,7 @@
     <slot name="header" />
   </div>
   <div class="card-body d-flex flex-column" v-on:keyup.enter="login">
-    <p class="card-text">
+    <p class="card-text text-light">
       <slot />
     </p>
   </div>

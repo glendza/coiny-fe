@@ -1,7 +1,7 @@
 <template>
   <dashboard-panel
     title="Strategy Editor"
-    :subtitle="deployedAt"
+    :subtitle="useGlobalRules ? '' : deployedAt"
     class="col-12 col-lg-6"
   >
     <template #header>
@@ -49,7 +49,7 @@ const useGlobalRules = ref<boolean>();
 
 const debouncedUpdateGlobalRules = useDebouncer(() => {
   // TODO: Prevent updating if value is same as before
-  rulesStore.toggleGlobalRulesUsage(useGlobalRules.value);
+  rulesStore.toggleGlobalRulesUsage(useGlobalRules.value as boolean);
 });
 
 watch(useGlobalRules, (newValue, oldValue) => {

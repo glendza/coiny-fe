@@ -1,5 +1,13 @@
 <template>
 <dashboard-panel title="Rule Definitions" class="col-12 col-lg-6">
+  <strategy-rule-group title="Utility functions" v-if="ruleDocs">
+    <strategy-rule-definition
+      v-for="[name, documentation] in Object.entries(ruleDocs).filter(([k, v]) => v.type === FunctionType.UTILITY)"
+      :key="name"
+      :name="name"
+      :documentation="documentation"
+    />
+  </strategy-rule-group>
   <strategy-rule-group title="Calculations" v-if="ruleDocs">
     <strategy-rule-definition
       v-for="[name, documentation] in Object.entries(ruleDocs).filter(([k, v]) => v.type === FunctionType.CALCULATION)"

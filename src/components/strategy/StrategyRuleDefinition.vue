@@ -24,7 +24,7 @@
         <td class="align-top p-1">Description</td>
         <td class="p-1 ps-4">{{ documentation.description }}</td>
       </tr>
-      <tr>
+      <tr v-if="documentation.arguments && documentation.arguments.length > 0">
         <td class="align-top p-1">Arguments</td>
         <td class="p-1 ps-4">
           <table class="rule-definition__args-table table table-bordered table-primary w-100 text-center">

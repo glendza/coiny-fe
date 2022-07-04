@@ -14,3 +14,11 @@ export const getNotifications = (limit: number, offset: number) => {
     }
   );
 };
+
+export const getTransactions = (limit: number, offset: number) => {
+  return axios.get<PaginatedResponse<user.Transaction>>(
+    BASE_PATH + '/transactions', {
+      params: { limit, offset }
+    }
+  );
+};
