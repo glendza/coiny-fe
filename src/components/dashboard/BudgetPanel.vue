@@ -58,17 +58,17 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
 }));
 
 Chart.register(...registerables);
-const days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
-const maximums = [32, 43, 20, 50, 33, 34, 95, 43, 9];
-const { lineChartProps } = useLineChart({
-  chartData: {
-    labels: days,
+
+const chartData = computed(() => {
+  return {
+    labels: balance.value ? balance.value.balance_snapshots.map((bs) => bs.created_at) : [],
     datasets: [{
       label: 'Balance',
-      data: maximums,
+      data: balance.value ? balance.value.balance_snapshots.map((bs) => bs.crypto_balance + bs.fiat_balance) : [],
       fill: true
     }]
-  },
-  options: chartOptions
+  };
 });
+
+const { lineChartProps } = useLineChart({ chartData, options: chartOptions });
 </script>

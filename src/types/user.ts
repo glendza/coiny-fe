@@ -35,4 +35,12 @@ export interface Transaction {
 export interface Balance {
   fiat_balance: number;
   crypto_balance: number;
+  balance_snapshots: {
+    id: number;
+    user: number,
+    created_at: string;
+    updated_at: string
+    fiat_balance: number;
+    crypto_balance: number;
+  }[]
 }
