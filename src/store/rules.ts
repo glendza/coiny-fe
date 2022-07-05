@@ -35,16 +35,16 @@ const useRulesStore = defineStore('rules', {
       }
       this.isDraftSaving = false;
     },
-    async resetDraft() {
-      this.loading = true;
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await this.saveDraft(this.ruleset!.rules);
-      } catch (e) {
-        console.error('Failed to reset ruleset draft!', e);
-      }
-      this.loading = false;
-    },
+    // async resetDraft() { // XXX Redundant?
+    //   this.loading = true;
+    //   try {
+    //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    //     await this.saveDraft(this.ruleset!.rules);
+    //   } catch (e) {
+    //     console.error('Failed to reset ruleset draft!', e);
+    //   }
+    //   this.loading = false;
+    // },
     async deployRules() {
       this.loading = true;
       try {
@@ -61,6 +61,15 @@ const useRulesStore = defineStore('rules', {
         this.ruleset = await rulesAPI.toggleGlobalRules(value);
       } catch (e) {
         console.error('Failed to toggle global ruleset usage!', e);
+      }
+      this.loading = false;
+    },
+    async cancelChanges() {
+      this.loading = true;
+      try {
+        this.saveDraft(null);
+      } catch (e) {
+        console.error('Failed to cancel ruleset changes!', e);
       }
       this.loading = false;
     }

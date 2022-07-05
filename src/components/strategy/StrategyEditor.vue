@@ -18,14 +18,24 @@
             v-if="isDraftSaving"
           />
         </div>
-        <button
-          type="button"
-          class="btn btn-primary"
-          :class="{'disabled': isDraftSaving || useGlobalRules}"
-          @click="rulesStore.deployRules"
-        >
-          Deploy Rules
-        </button>
+        <div>
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            :class="{'disabled': isDraftSaving || useGlobalRules || ruleset?.rules_draft === null }"
+            @click="onCancelChanges"
+          >
+            Cancel changes
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            :class="{'disabled': isDraftSaving || useGlobalRules}"
+            @click="rulesStore.deployRules"
+          >
+            Deploy Rules
+          </button>
+        </div>
       </div>
     </template>
   </dashboard-panel>
@@ -71,4 +81,11 @@ const deployedAt = computed(() => {
   }
   return `Last deployed on ${dateUtils.toLocale(rulesStore.ruleset.deployed_at)}`;
 });
+
+const onCancelChanges = () => {
+  // TODO This should be a modal!
+  if (confirm('Are you sure you want to cancel?\nAll the progress will be lost.') === true) {
+    rulesStore.cancelChanges();
+  }
+};
 </script>
