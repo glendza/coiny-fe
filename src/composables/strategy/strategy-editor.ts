@@ -21,7 +21,7 @@ const useStrategyEditor = () => {
       return;
     }
 
-    rules.value = newRuleset?.rules_draft || newRuleset?.rules;
+    rules.value = newRuleset?.rules_draft === null ? newRuleset.rules : newRuleset?.rules_draft;
 
     watch(rules, () => {
       isDraftSaving.value = true;

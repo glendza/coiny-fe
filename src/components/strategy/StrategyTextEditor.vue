@@ -1,13 +1,13 @@
 <template>
-<div v-if="rules" class="flex-fill p-1">
+<div v-if="ruleset" class="flex-fill p-1">
   <textarea
     v-if="ruleset?.use_global_rules"
     :disabled="true"
     class="editor-textarea p-2 text-dark"
-    :value="ruleset?.global_rules"
+    :value="ruleset.global_rules || ''"
   />
   <textarea
-    v-else
+    v-if="!ruleset?.use_global_rules && rules !== null"
     class="editor-textarea p-2 text-dark"
     v-model="rules"
   />
