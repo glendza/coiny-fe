@@ -29,6 +29,7 @@ import { LineChart, useLineChart } from 'vue-chart-3';
 import { Chart, registerables, ChartOptions } from 'chart.js';
 import useUserStore from '@/store/user';
 import { storeToRefs } from 'pinia';
+import { dateUtils } from '@/utils';
 
 const userStore = useUserStore();
 
@@ -61,7 +62,7 @@ Chart.register(...registerables);
 
 const chartData = computed(() => {
   return {
-    labels: balance.value ? balance.value.balance_snapshots.map((bs) => bs.created_at) : [],
+    labels: balance.value ? balance.value.balance_snapshots.map((bs) => dateUtils.toLocale(bs.created_at)) : [],
     datasets: [{
       label: 'Balance',
       data: balance.value ? balance.value.balance_snapshots.map((bs) => bs.crypto_balance + bs.fiat_balance) : [],
