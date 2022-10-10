@@ -1,7 +1,12 @@
 <template>
 <coiny-header />
-<div class="bg-secondary bg-gradient p-2 text-dark">
-  <h4 class="m-0">{{ title }}</h4>
+<div class="bg-secondary bg-gradient p-2 text-dark d-flex justify-content-between">
+  <div class="layout__title">
+    <h4 class="m-0">{{ title }}</h4>
+  </div>
+  <div class="layout__right d-flex align-content-center">
+    <slot name="header" />
+  </div>
 </div>
 <main class="container-fluid d-flex flex-column flex-fill">
   <slot>😐</slot>

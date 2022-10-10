@@ -21,8 +21,7 @@ const useRulesStore = defineStore('rules', {
     async getUserRuleset() {
       this.loading = true;
       try {
-        const { data: ruleset } = await rulesAPI.getUserRuleset();
-        this.ruleset = ruleset;
+        this.ruleset = await rulesAPI.getUserRuleset();
       } catch (e) {
         console.error('Failed to fetch user\'s ruleset!', e);
       }
@@ -30,25 +29,22 @@ const useRulesStore = defineStore('rules', {
     },
     async saveDraft(draft: string | null) {
       try {
-        const { data: ruleset } = await rulesAPI.saveDraft(draft);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.ruleset = ruleset;
+        this.ruleset = await rulesAPI.saveDraft(draft);
       } catch (e) {
         console.error('Failed to fetch user\'s ruleset!', e);
       }
       this.isDraftSaving = false;
     },
-    async resetDraft() {
-      this.loading = true;
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await this.saveDraft(this.ruleset!.rules);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      } catch (e) {
-        console.error('Failed to reset ruleset draft!', e);
-      }
-      this.loading = false;
-    },
+    // async resetDraft() { // XXX Redundant?
+    //   this.loading = true;
+    //   try {
+    //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    //     await this.saveDraft(this.ruleset!.rules);
+    //   } catch (e) {
+    //     console.error('Failed to reset ruleset draft!', e);
+    //   }
+    //   this.loading = false;
+    // },
     async deployRules() {
       this.loading = true;
       try {
@@ -56,6 +52,24 @@ const useRulesStore = defineStore('rules', {
         this.ruleset = ruleset;
       } catch (e) {
         console.error('Failed to reset ruleset draft!', e);
+      }
+      this.loading = false;
+    },
+    async toggleGlobalRulesUsage(value: boolean) {
+      this.loading = true;
+      try {
+        this.ruleset = await rulesAPI.toggleGlobalRules(value);
+      } catch (e) {
+        console.error('Failed to toggle global ruleset usage!', e);
+      }
+      this.loading = false;
+    },
+    async cancelChanges() {
+      this.loading = true;
+      try {
+        this.saveDraft(null);
+      } catch (e) {
+        console.error('Failed to cancel ruleset changes!', e);
       }
       this.loading = false;
     }

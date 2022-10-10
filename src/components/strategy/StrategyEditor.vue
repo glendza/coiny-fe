@@ -1,56 +1,91 @@
 <template>
-  <aside class="strategy-panel col d-flex bg-dark border border-5">
-    <tabs
-      v-model="selectedTab"
-      :tabs="Object.values(EditorTabs)"
-      class="flex-fill"
-    >
-      <template v-if="rulesStore.isDraftSaving" #header>
-        <spinner pre="Saving draft..." />
-      </template>
-      <strategy-gui-editor v-if="selectedTab === EditorTabs.GUI" />
-      <strategy-text-editor v-if="selectedTab === EditorTabs.TEXT" />
-      <template #footer>
-        <div class="p-2 d-flex justify-content-end">
+  <dashboard-panel
+    title="Strategy Editor"
+    :subtitle="useGlobalRules ? '' : deployedAt"
+    class="col-12 col-lg-6"
+  >
+    <template #header>
+      <div class="d-flex align-items-center">
+        <toggle-button v-model="useGlobalRules" />
+      </div>
+    </template>
+    <strategy-text-editor />
+    <template #footer>
+      <div class="p-1 d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+          <spinner
+            post="Saving draft..."
+            v-if="isDraftSaving"
+          />
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            :class="{'disabled': isDraftSaving || useGlobalRules || ruleset?.rules_draft === null }"
+            @click="onCancelChanges"
+          >
+            Cancel changes
+          </button>
           <button
             type="button"
             class="btn btn-primary"
-            :class="{'disabled': rulesStore.isDraftSaving}"
+            :class="{'disabled': isDraftSaving || useGlobalRules}"
             @click="rulesStore.deployRules"
           >
             Deploy Rules
           </button>
         </div>
-      </template>
-    </tabs>
-  </aside>
+      </div>
+    </template>
+  </dashboard-panel>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import Tabs from '@/components/layout/Tabs.vue';
-import StrategyGuiEditor from '@/components/strategy/StrategyGuiEditor.vue';
+import { computed, ref, watch } from 'vue';
+import DashboardPanel from '@/components/dashboard/DashboardPanel.vue';
 import StrategyTextEditor from '@/components/strategy/StrategyTextEditor.vue';
+import ToggleButton from '@/components/controls/ToggleButton.vue';
 import useRulesStore from '@/store/rules';
-
-enum EditorTabs {
-  GUI = 'Visual Editor',
-  TEXT = 'Raw Editor'
-}
+import { storeToRefs } from 'pinia';
+import { dateUtils } from '@/utils';
+import useDebouncer from '@/composables/debouncer';
 
 const rulesStore = useRulesStore();
 
-// Component API
-defineProps({
-  modelValue: String
+const { ruleset, isDraftSaving } = storeToRefs(rulesStore);
+
+const useGlobalRules = ref<boolean>();
+
+const debouncedUpdateGlobalRules = useDebouncer(() => {
+  // TODO: Prevent updating if value is same as before
+  rulesStore.toggleGlobalRulesUsage(useGlobalRules.value as boolean);
 });
 
-// Data
-const selectedTab = ref<EditorTabs>(EditorTabs.TEXT); // TODO: GUI should be default
-</script>
+watch(useGlobalRules, (newValue, oldValue) => {
+  if (typeof oldValue === 'undefined') {
+    return;
+  }
+  debouncedUpdateGlobalRules();
+});
 
-<style lang="scss" scoped>
-.strategy-panel {
-  border-color: var(--bs-body-bg) !important;
-}
-</style>
+watch(ruleset, (value) => {
+  if (value && typeof useGlobalRules.value === 'undefined') {
+    useGlobalRules.value = ruleset.value?.use_global_rules;
+  }
+});
+
+const deployedAt = computed(() => {
+  if (!rulesStore.ruleset) {
+    return '';
+  }
+  return `Last deployed on ${dateUtils.toLocale(rulesStore.ruleset.deployed_at)}`;
+});
+
+const onCancelChanges = () => {
+  // TODO This should be a modal!
+  if (confirm('Are you sure you want to cancel?\nAll the progress will be lost.') === true) {
+    rulesStore.cancelChanges();
+  }
+};
+</script>
